@@ -3,35 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bookmark;
+use App\Http\Requests\StoreBookmarkRequest;
+use App\Services\UrlPreviewService;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 
 class BookmarkController extends Controller
 {
-    public function index(){
+    /**
+     * URL preview service instance.
+     */
+    private UrlPreviewService $previewService;
 
-        $bookmarks = Bookmark::where('user_id', auth()->id())->get();
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct(UrlPreviewService $previewService)
+    {
+        $this->previewService = $previewService;
+    }
+
+    /**
+     * Display a listing of bookmarks with preview data.
+     */
+    public function index(): View
+    {
+        $bookmarks = auth()->user()
+            ->bookmarks()
+            ->latest()
+            ->get()
+            ->map(function ($bookmark) {
+                $bookmark->preview = $this->previewService->getPreview($bookmark->url);
+                return $bookmark;
+            });
+
         return view('home', compact('bookmarks'));
     }
 
-
-    public function store(Request $request)
+    /**
+     * Store a newly created bookmark in storage.
+     */
+    public function store(StoreBookmarkRequest $request): RedirectResponse
     {
+        auth()->user()->bookmarks()->create($request->validated());
 
-        $request->validate([
-            'bname' => 'required|string|max:255',
-            'burl' => 'required|string',
-            'bcategory' => 'nullable|string|max:255',
-        ]);
+        return redirect()
+            ->route('home')
+            ->with('success', 'Bookmark saved successfully!');
+    }
 
-        // dd(auth()->id());
+    /**
+     * Get preview data for a URL.
+     */
+    public function getUrlPreview(Request $request): JsonResponse
+    {
+        $preview = $this->previewService->getPreview(
+            $request->validate(['url' => 'required|url'])['url']
+        );
 
-        Bookmark::create([
-            'user_id' => auth()->id(),
-            'name' => $request->input('bname'),
-            'url' => $request->input('burl'),
-            'category' => $request->input('bcategory'),
-        ]);
-
-        return redirect()->route('home')->with('success', 'Bookmark saved successfully!');
+        return response()->json($preview);
     }
 }
