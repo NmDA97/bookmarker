@@ -1,7 +1,7 @@
 <x-app-layout>
 
     <div class="mt-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="w-full mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <div class="text-gray-900 dark:text-gray-100 text-lg">
                     {{ __('Add a New Bookmark') }}
@@ -97,7 +97,7 @@
         </div> --}}
 
         <!-- home.blade.php -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-16 py-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-8 py-4">
             @foreach ($bookmarks as $bookmark)
                 <div class="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow ">
                     <a href="{{ $bookmark->url }}" target="_blank" class="block">
