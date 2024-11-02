@@ -18,6 +18,7 @@ Route::get('/', function () {
 
 Route::get('home/',[BookmarkController::class, 'index'])->name('home')->middleware('auth');
 Route::post('home/',[BookmarkController::class, 'store'])->name('bookmark.store')->middleware('auth');
+Route::delete('home/{bookmark}',[BookmarkController::class, 'destroy'])->name('bookmark.delete')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

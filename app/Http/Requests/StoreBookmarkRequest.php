@@ -22,9 +22,9 @@ class StoreBookmarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'bname' => 'required|string|max:255',
-            'burl' => 'required|url',
-            'bcategory' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
+            'url' => 'required|url',
+            'category' => 'nullable|string|max:255',
         ];
     }
 
@@ -34,9 +34,9 @@ class StoreBookmarkRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'bname' => 'bookmark name',
-            'burl' => 'URL',
-            'bcategory' => 'category',
+            'name' => 'bookmark name',
+            'url' => 'URL',
+            'category' => 'category',
         ];
     }
 }

@@ -53,6 +53,16 @@ class BookmarkController extends Controller
             ->route('home')
             ->with('success', 'Bookmark saved successfully!');
     }
+    public function destroy(Bookmark $bookmark): RedirectResponse
+    {
+        // $this->authorize('delete', $bookmark);
+        // dd($bookmark);
+        $bookmark->delete();
+
+        return redirect()
+            ->route('home')
+            ->with('success', 'Bookmark saved successfully!');
+    }
 
     /**
      * Get preview data for a URL.
