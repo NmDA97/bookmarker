@@ -75,4 +75,15 @@ class BookmarkController extends Controller
 
         return response()->json($preview);
     }
+
+    // app/Http/Controllers/YourController.php
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // Perform the search using Eloquent
+        $bookmarks = Bookmark::where('name', 'LIKE', "%{$query}%")->get();
+
+        return response()->json($bookmarks);
+    }
 }

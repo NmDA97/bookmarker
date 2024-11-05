@@ -2,8 +2,7 @@
     <div class="flex justify-end justify-self-end pr-2 pb-2" x-data="{ open: false }">
         <!-- Three dots button - hidden when menu is open -->
         <button @click.stop="open = true" x-show="!open" class="p-1 hover:bg-gray-100 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20"
-                fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
                 <path
                     d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
             </svg>
@@ -24,4 +23,5 @@
                 </button>
             </form>
         </div>
-</div>
+    </div>
+
